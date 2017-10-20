@@ -1,0 +1,89 @@
+* Main
+
+Moving all my Emacs settings will be an iterative process.  The
+following blocks will be gradually organized configuration settings.
+
+Moving 
+
+** Unorganized Elisp Settings
+
+The settings in this section are here because they have not yet been
+organized.
+
+#+BEGIN_SRC emacs-lisp
+
+  (setq-default indent-tabs-mode nil) 
+  (setq standard-indent 2)
+  (setq tab-width 2)
+  (setq auto-fill-mode t)
+  (setq make-backup-files nil)
+  (setq compilation-scroll-output 1)
+  (setq compile-command "cargo build --release")
+
+#+END_SRC
+
+** Credits
+
+* Full Configuration
+
+** Primitive UI Augmentation
+
+In other words, this section include basic emacs configuration
+settings, usually global settings, that are not part of another
+package.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+(global-hl-line-mode 1)
+
+;; whitespace management
+(setq show-trailing-whitespace t)
+;; automatically clean up bad whitespace
+(setq whitespace-action '(auto-cleanup))
+;; only show bad whitespace
+(setq whitespace-style
+  '(trailing space-before-tab indentation empty space-after-tab))
+#+END_SRC
+
+Scroll whilst keeping the cursor fixed using M-n M-p:
+
+#+BEGIN_SRC emacs-lisp
+  (setq my-scroll-speed 1)
+  (defun window-downn (arg)
+    "A function to scroll the window down 1 line."
+    (interactive "P")
+    (scroll-down my-scroll-speed))
+
+  (defun window-upn (arg)
+    "A function to scroll the window up 1 line."
+    (interactive "P")
+    (scroll-up my-scroll-speed))
+
+  (global-set-key "\M-n" 'window-upn)
+  (global-set-key "\M-p" 'window-downn)
+
+
+#+END_SRC
+** Extra Packages
+
+#+BEGIN_SRC emacs-lisp
+
+  (use-package powerline
+               :ensure t
+               :config
+               (progn
+                 (powerline-default-theme)
+                 ))
+
+  (use-package magit
+    :ensure t)
+
+  ;; this might be a good saturday project
+  ;; (use-package helm
+  ;;   :ensure t
+  ;;  )
+
+#+END_SRC
+
+
+
